@@ -1,0 +1,11 @@
+- name: Install nginx
+  apt:
+    name: nginx
+    state: present
+  tags:
+    - packages
+
+- name: Remove default site
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
