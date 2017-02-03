@@ -1,0 +1,8 @@
+debug: true
+env: local
+domain: filmoteca.dev
+web_host: filmoteca.dev
+project_path: /var/www/
+
+# Behavioral inventory parameters of Ansible
+ansible_user: vagrant

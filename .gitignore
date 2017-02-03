@@ -1,0 +1,6 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea
+/ansible/inventaries/production
+/ansible/inventaries/staging
+
+
