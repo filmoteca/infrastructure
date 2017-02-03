@@ -1,0 +1,11 @@
+- name: webserver
+  hosts: [webserver, mysql]
+  become: true
+
+  roles:
+    - common
+    - nginx
+    - php-fpm
+    - app
+    - ssl
+    - mysql

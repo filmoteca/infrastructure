@@ -1,0 +1,8 @@
+- name: Link project
+  file:
+    state: link
+    src: /vagrant
+    dest: /var/www
+    force: yes
+    owner: www-data
+    group: www-data
