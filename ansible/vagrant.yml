@@ -1,5 +1,5 @@
-- name: webserver
-  hosts: [webserver, mysql]
+- name: webservers
+  hosts: [webservers, mysql]
   become: true
 
   roles:
