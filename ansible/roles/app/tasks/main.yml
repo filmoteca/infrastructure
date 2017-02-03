@@ -1,0 +1,23 @@
+
+- name: Create virtual hosts
+  template:
+    src: web.conf.j2
+    dest: /etc/nginx/sites-available/filmoteca.unam.mx.conf
+    owner: www-data
+    group: www-data
+  notify: restart nginx
+
+- name: Enable virtual hosts
+  file:
+    state: link
+    src: /etc/nginx/sites-available/filmoteca.unam.mx.conf
+    dest: /etc/nginx/sites-enabled/filmoteca.unam.mx.conf
+  notify: restart nginx
+
+- name: Installing dependencies
+  command: composer install
+  args:
+    chdir: "/{{project_path}}/current"
+    creates: "/{{project_path}}/current/vendor"
+  become: yes
+  become_user: www-data

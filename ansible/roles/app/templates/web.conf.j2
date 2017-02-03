@@ -1,0 +1,43 @@
+server {
+    listen 80 default_server;
+    listen 443 default ssl;
+    server_name {{ domain }};
+
+    ssl_certificate /etc/nginx/ssl/{{ domain }}.crt;
+    ssl_certificate_key /etc/nginx/ssl/{{ domain }}.key;
+
+    root {{project_path}}/current/htdocs;
+    index index.php;
+
+    access_log /var/log/nginx/access.log main;
+    error_log /var/log/nginx//error.log {{ log_level }};
+
+    gzip on;
+    gzip_disable "msie6";
+    gzip_comp_level 7;
+    gzip_types text/plain text/css text/js application/x-javascript application/javascript text/javascript application/json application/x-font-ttf;
+
+    fastcgi_buffers 16  16k;
+    fastcgi_buffer_size 32k;
+
+    {% if debug %}
+    pagespeed on;
+    pagespeed FileCachePath /var/ngx_pagespeed_cache;
+    pagespeed Statistics on;
+    pagespeed StatisticsLogging on;
+    pagespeed LogDir /var/log/pagespeed;
+    {% endif %}
+
+    location ~^ * {
+      try_files $uri @php;
+    }
+
+    # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+    location @php {
+      fastcgi_pass unix:{{ fpm_socket }};
+      fastcgi_split_path_info ^(.+\.php)(/.*)$;
+      include fastcgi_params;
+      fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;
+      fastcgi_param HTTP_PROXY ""; # httpoxy vulnerability
+    }
+}
