@@ -1,0 +1,11 @@
+{
+    "name": "filmoteca/infrastructure",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Victor Aguilar",
+            "email": "victor.aguilar@clickbus.com"
+        }
+    ],
+    "require": {}
+}
