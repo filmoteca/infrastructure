@@ -9,7 +9,13 @@
     - php5-mcrypt
     - php5-mysql
     - php5-curl
+    - php-pear
+    - php5-gd
     - php-apc
+    - curl
+    - postfix
+    - vim
+    - npm
     - git
   tags:
     - packages
