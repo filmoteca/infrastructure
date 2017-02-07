@@ -1,8 +1,15 @@
+- name: Create base directory
+  file:
+    state: directory
+    path: "/var/www"
+    owner: www-data
+    group: www-data
+
 - name: Link project
   file:
     state: link
     src: /vagrant
-    dest: /var/www
+    dest: "/var/www/current"
     force: yes
     owner: www-data
     group: www-data

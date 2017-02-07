@@ -10,7 +10,7 @@
     -new
     -newkey rsa:2048
     -nodes
-    -x50
+    -x509
     -days 365
     -subj "/C=US/ST=Oregon/L=Portland/O=IT/CN=*.{{ domain }}"
     -keyout /etc/nginx/ssl/{{ domain }}.key

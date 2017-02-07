@@ -1,3 +1,9 @@
+{% if debug %}
+    {% set log_level = "debug" %}
+{% else %}
+    {% set log_level = "error" %}
+{% endif %}
+
 server {
     listen 80 default_server;
     listen 443 default ssl;
@@ -6,11 +12,11 @@ server {
     ssl_certificate /etc/nginx/ssl/{{ domain }}.crt;
     ssl_certificate_key /etc/nginx/ssl/{{ domain }}.key;
 
-    root {{project_path}}/current/htdocs;
+    root {{project_path}}/htdocs;
     index index.php;
 
-    access_log /var/log/nginx/access.log main;
-    error_log /var/log/nginx//error.log {{ log_level }};
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log {{ log_level }};
 
     gzip on;
     gzip_disable "msie6";
@@ -20,7 +26,7 @@ server {
     fastcgi_buffers 16  16k;
     fastcgi_buffer_size 32k;
 
-    {% if debug %}
+    {% if not debug %}
     pagespeed on;
     pagespeed FileCachePath /var/ngx_pagespeed_cache;
     pagespeed Statistics on;
@@ -28,7 +34,7 @@ server {
     pagespeed LogDir /var/log/pagespeed;
     {% endif %}
 
-    location ~^ * {
+    location ~* .* {
       try_files $uri @php;
     }
 

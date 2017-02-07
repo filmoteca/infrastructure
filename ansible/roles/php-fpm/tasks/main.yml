@@ -39,15 +39,15 @@
   # Move the default pool if they haven't be moved.
   command: >
     mv
-    {{ pool_dir }}/www.conf
-    {{ pool_dir }}/www.disabled
-    creates={{ pool_dir }}/www.disabled
+    {{ fpm_pool_dir }}/www.conf
+    {{ fpm_pool_dir }}/www.disabled
+    creates={{ fpm_pool_dir }}/www.disabled
   notify: restart php5-fpm
 
 - name: Copy php-fpm configuration
   template:
     src: web.conf
-    dest: "{{ pool_dir }}/www.conf"
+    dest: "{{ fpm_pool_dir }}/www.conf"
   notify: restart php5-fpm
 
 - name: Install composer

@@ -4,6 +4,7 @@
 
   roles:
     - common
+    - vagrant
     - nginx
     - php-fpm
     - app
