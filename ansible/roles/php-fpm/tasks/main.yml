@@ -20,6 +20,11 @@
   tags:
     - packages
 
+- name: Enabled mcrypt
+  shell: php5enmod mcrypt
+  notify:
+    - restart php5-fpm
+
 - name: Install xdebug
   apt:
     name: php5-xdebug
@@ -50,7 +55,3 @@
     dest: "{{ fpm_pool_dir }}/www.conf"
   notify: restart php5-fpm
 
-- name: Install composer
-  shell: curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-  args:
-    creates: /usr/local/bin/composer
