@@ -14,6 +14,17 @@
     dest: /etc/nginx/sites-enabled/filmoteca.unam.mx.conf
   notify: restart nginx
 
+- name: Download composer
+  get_url:
+    url: https://getcomposer.org/installer
+    dest: "{{ project_path }}"
+    mode: 0440
+
+- name: Install composer
+  shell: php -- --install-dir=/usr/local/bin --filename=composer
+  args:
+    creates: /usr/local/bin/composer
+
 - name: Installing dependencies
   command: composer install
   args:
