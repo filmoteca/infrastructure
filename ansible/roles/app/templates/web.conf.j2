@@ -34,8 +34,25 @@ server {
     pagespeed LogDir /var/log/pagespeed;
     {% endif %}
 
+    #
+    # All the index.php are pass to @php
+    # For instance:
+    # /index.php
+    # /cine-en-linea/index.php
+    #
+    location ~* (/.+)*/index\.php {
+      try_files dummy_file_456 @php;
+    }
+
+    #
+    # Firstly, server the file if exists, otherwise do an internal redirect to @php
+    #
     location ~* .* {
-      try_files $uri @php;
+        try_files $uri @rewrite;
+    }
+
+    location @rewrite {
+        rewrite ^(.*)$ /index.php last;
     }
 
     # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
