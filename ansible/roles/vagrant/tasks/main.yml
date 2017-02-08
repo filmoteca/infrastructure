@@ -1,7 +1,7 @@
 - name: Create base directory
   file:
     state: directory
-    path: "/var/www"
+    path: /var/www
     owner: www-data
     group: www-data
 
@@ -9,7 +9,7 @@
   file:
     state: link
     src: /vagrant
-    dest: "/var/www/current"
+    dest: /var/www/current
     force: yes
     owner: www-data
     group: www-data
@@ -32,3 +32,15 @@
     creates: "{{project_path}}/vendor"
   become: yes
   become_user: www-data
+
+- name: Install sass
+  command: gem install sass
+
+- name: Install bower
+  command: npm install -g bower
+
+- name: Fix bower
+  file:
+    state: link
+    src: /usr/bin/nodejs
+    path: /usr/bin/node
