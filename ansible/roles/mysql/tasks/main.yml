@@ -1,6 +1,21 @@
 - name: Install mysql
   apt:
-    name: mysql-server
+    name: "{{ item }}"
     state: present
+  with_items:
+    - python-mysqldb
+    - mysql-server
   tags:
     - packages
+
+- name: Create MySql DB
+  mysql_db:
+    name: "{{ mysql_db_name }}"
+    state: present
+
+- name: Create user
+  mysql_user:
+    name: "{{ mysql_user }}"
+    password: "{{ mysql_password }}"
+    priv: '{{ mysql_db_name }}.*:ALL'
+    state: present

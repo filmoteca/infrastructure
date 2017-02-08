@@ -13,3 +13,22 @@
     force: yes
     owner: www-data
     group: www-data
+
+- name: Download composer
+  get_url:
+    url: https://getcomposer.org/installer
+    dest: "{{ project_path }}"
+    mode: 0440
+
+- name: Install composer
+  shell: php -- --install-dir=/usr/local/bin --filename=composer
+  args:
+    creates: /usr/local/bin/composer
+
+- name: Installing dependencies
+  command: composer install
+  args:
+    chdir: "{{project_path}}"
+    creates: "{{project_path}}/vendor"
+  become: yes
+  become_user: www-data
