@@ -44,3 +44,22 @@
     state: link
     src: /usr/bin/nodejs
     path: /usr/bin/node
+
+- name: Change nginx user
+  lineinfile:
+    name: /etc/nginx/nginx.conf
+    regexp: '^user'
+    line: 'user vagrant;'
+
+- name: Change php-fpm owner
+  lineinfile:
+    name: /etc/php5/fpm/pool.d/www.conf
+    regexp: '^listen\.owner'
+    line: 'listen.owner = vagrant'
+
+- name: Change php-fpm group
+  lineinfile:
+    name: /etc/php5/fpm/pool.d/www.conf
+    regexp: '^listen\.group'
+    line: 'listen.group = vagrant'
+    state: present

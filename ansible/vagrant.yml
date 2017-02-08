@@ -4,8 +4,8 @@
 
   roles:
     - common
-    - vagrant
     - nginx
     - php-fpm
     - ssl
     - mysql
+    - vagrant
