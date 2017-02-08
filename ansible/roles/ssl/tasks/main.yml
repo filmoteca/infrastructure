@@ -15,4 +15,6 @@
     -subj "/C=US/ST=Oregon/L=Portland/O=IT/CN=*.{{ domain }}"
     -keyout /etc/nginx/ssl/{{ domain }}.key
     -out /etc/nginx/ssl/{{ domain }}.crt
+  args:
+    creates: "/etc/nginx/ssl/{{ domain }}.crt"
   notify: restart nginx
