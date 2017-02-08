@@ -27,11 +27,12 @@ server {
     fastcgi_buffer_size 32k;
 
     {% if not debug %}
-    pagespeed on;
-    pagespeed FileCachePath /var/ngx_pagespeed_cache;
-    pagespeed Statistics on;
-    pagespeed StatisticsLogging on;
-    pagespeed LogDir /var/log/pagespeed;
+    # We need to compile nginx with this module.
+    #pagespeed on;
+    #pagespeed FileCachePath /var/ngx_pagespeed_cache;
+    #pagespeed Statistics on;
+    #pagespeed StatisticsLogging on;
+    #pagespeed LogDir /var/log/pagespeed;
     {% endif %}
 
     #
