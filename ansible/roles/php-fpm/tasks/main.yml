@@ -21,7 +21,7 @@
     - packages
 
 - name: Enabled mcrypt
-  shell: php5enmod mcrypt
+  command: php5enmod mcrypt
   notify:
     - restart php5-fpm
 
