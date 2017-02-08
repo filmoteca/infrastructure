@@ -95,7 +95,8 @@
     php artisan migrate --package="filmoteca/static-pages" --env=local &&
     php artisan create:group --env=local &&
     php artisan create:user filmoteca filmoteca@unam.mx filmoteca Admin --env=local
-    php artisan asset:publish frozennode/administrator --env=local  &&
+    php artisan asset:publish frozennode/administrator --env=local
   args:
       chdir: '{{project_path}}'
       creates: '{{project_path}}/htdocs/packages'
+  tags: artisan
