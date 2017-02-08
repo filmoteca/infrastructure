@@ -2,7 +2,5 @@
 .idea
 /ansible/inventaries/production
 /ansible/inventaries/staging
-/vendor/
-Vagrantfile
 .vagrant
-compsoer.lock
+/project
