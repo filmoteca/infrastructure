@@ -3,9 +3,12 @@
 ## Introducción
 
 Para desarrollar este proyecto estamos usando Vagrant para administrar el ambiente de desarrollo y Ansible para manejar
-todas las dependencias del proyecto. De esta manera, tenemos un ambiente de desarrollo muy similar al ambiente
+todas las dependencias y configuración del proyecto. De esta manera, tenemos un ambiente de desarrollo muy similar al ambiente
 productivo y podemos destruir y volver a crear ambientes (productivo o pruebas) de manera automatica gracias a Vagrant
-y Ansible respectivamente.
+y Ansible.
+
+Una de las responsabilidades de Ansible es administrar dependencias de los servidores, por ejemplo, installar php y mysql,
+y configurarlo de manera adecuada, por ejemplo, crear el virtual host para el web server.
 
 ## Requerimientos
 
@@ -14,6 +17,7 @@ Necesitas tener instalados los siguientes programas
 * git
 * ansible
 * vagrant
+* virtual box
 
 ## Instalación del ambiente de desarrollo
 
@@ -37,3 +41,22 @@ Con esto ya puedes modificar el proyecto dentro de la carpeta `project` como nor
 usuario: filmoteca@unam.mx
 
 Password: filmoteca
+
+## Provisionar otros ambientes
+
+Para provisionar el ambiente de producción se debe correr los siguientes commandos
+
+#### Producción
+```
+ansible-playbook webservers.yml mysql.yml -i inventaries/production/hosts.yml
+```
+
+#### Staging
+```
+ansible-playbook webservers.yml mysql.yml -i inventaries/production/hosts.yml
+```
+
+#### Local
+```
+ansible-playbook webservers.yml mysql.yml -i inventaries/production/hosts.yml
+```
