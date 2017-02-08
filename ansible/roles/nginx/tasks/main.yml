@@ -5,6 +5,13 @@
   tags:
     - packages
 
+- name: Uninstall apache
+  apt:
+    name: apache2
+    state: absent
+  tags:
+    - packages
+
 - name: Remove default site
   file:
     path: /etc/nginx/sites-enabled/default
