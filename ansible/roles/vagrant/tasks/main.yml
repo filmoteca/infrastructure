@@ -33,11 +33,20 @@
     state: file
   tags: composer
 
+- name: Check if sass exists
+  stat:
+    path: /usr/local/bin/sass
+  register: sass
+
 - name: Install sass
   command: gem install sass
+  args:
+    creates: /usr/local/bin/sass
 
 - name: Install bower
   command: npm install -g bower
+  args:
+    creates: /usr/local/bin/bower
 
 - name: Fix bower
   file:
@@ -54,15 +63,14 @@
 - name: Change php-fpm owner
   lineinfile:
     name: /etc/php5/fpm/pool.d/www.conf
-    regexp: '^listen\.owner'
+    regexp: '^listen\.owner.*www-data'
     line: 'listen.owner = vagrant'
 
 - name: Change php-fpm group
   lineinfile:
     name: /etc/php5/fpm/pool.d/www.conf
-    regexp: '^listen\.group'
+    regexp: '^listen\.group.*www-data'
     line: 'listen.group = vagrant'
-    state: present
 
 - name: Run composer
   command: composer install
@@ -70,3 +78,24 @@
     chdir: "{{ project_path }}"
   become: yes
   become_user: vagrant
+
+- name: Compile assets
+  command: "sass --update --force htdocs/assets/sass:/vagrant/htdocs/assets/css"
+  args:
+    chdir: '{{project_path}}'
+  become: yes
+  become_user: vagrant
+
+- name: Seed database, publish assets and create admin user
+  shell: >
+    php artisan asset:publish &&
+    php artisan db:seed --env=local &&
+    php artisan migrate --package="cartalyst/sentry" --env=local &&
+    php artisan migrate --package="mrjuliuss/syntara" --env=local &&
+    php artisan migrate --package="filmoteca/static-pages" --env=local &&
+    php artisan create:group --env=local &&
+    php artisan create:user filmoteca filmoteca@unam.mx filmoteca Admin --env=local
+    php artisan asset:publish frozennode/administrator --env=local  &&
+  args:
+      chdir: '{{project_path}}'
+      creates: '{{project_path}}/htdocs/packages'
