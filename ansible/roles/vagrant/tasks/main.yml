@@ -63,3 +63,10 @@
     regexp: '^listen\.group'
     line: 'listen.group = vagrant'
     state: present
+
+- name: Run composer
+  command: composer install
+  args:
+    chdir: "{{ project_path }}"
+  become: yes
+  become_user: vagrant
