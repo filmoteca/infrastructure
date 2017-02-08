@@ -36,6 +36,18 @@ server {
     {% endif %}
 
     #
+    # The prefix location has priority
+    #
+
+    #
+    # If the path has the prefix assets then this configuration is used without check the other regular expression
+    # locations.
+    #
+    location ^~ /assets/ {
+        try_files $uri =404;
+    }
+
+    #
     # All the index.php are pass to @php
     # For instance:
     # /index.php
