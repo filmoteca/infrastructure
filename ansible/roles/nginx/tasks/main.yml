@@ -4,6 +4,7 @@
     state: present
   tags:
     - packages
+    - nginx
 
 - name: Uninstall apache
   apt:
@@ -11,11 +12,15 @@
     state: absent
   tags:
     - packages
+    - nginx
 
 - name: Remove default site
   file:
     path: /etc/nginx/sites-enabled/default
     state: absent
+  tags:
+    - nginx
+    - config
 
 - name: Create virtual hosts
   template:
@@ -24,6 +29,9 @@
     owner: www-data
     group: www-data
   notify: restart nginx
+  tags:
+    - nginx
+    - config
 
 - name: Enable virtual hosts
   file:
@@ -31,3 +39,6 @@
     src: /etc/nginx/sites-available/filmoteca.unam.mx.conf
     dest: /etc/nginx/sites-enabled/filmoteca.unam.mx.conf
   notify: restart nginx
+  tags:
+    - nginx
+    - config
