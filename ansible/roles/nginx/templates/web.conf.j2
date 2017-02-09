@@ -13,7 +13,7 @@ server {
     ssl_certificate_key /etc/nginx/ssl/{{ domain }}.key;
 
     root {{project_path}}/htdocs;
-    index index.php;
+    index index.php index.html index.htm;
 
     access_log /var/log/nginx/access.log;
     error_log /var/log/nginx/error.log {{ log_level }};
@@ -36,8 +36,10 @@ server {
     {% endif %}
 
     #
-    # The prefix location has priority
+    # Remove index.php if is present so the all the locations work with pretty urls (paths). An external
+    # redirect is returned.
     #
+    rewrite ^/index.php/?(.*)$ /$1 permanent;
 
     #
     # If the path has the prefix assets then this configuration is used without check the other regular expression
@@ -48,28 +50,24 @@ server {
     }
 
     #
-    # All the index.php are pass to @php
-    # For instance:
-    # /index.php
-    # /cine-en-linea/index.php
+    # Any thing with a slash as prefix is rewrite. Note that try_files will always fails to serve the file so
+    # the path is always rewritten.
     #
-    location ~* (/.+)*/index\.php {
-      try_files dummy_file_456 @php;
-    }
-
-    #
-    # Firstly, server the file if exists, otherwise do an internal redirect to @php
-    #
-    location ~* .* {
+    location / {
         try_files $uri @rewrite;
     }
 
     location @rewrite {
-        rewrite ^(.*)$ /index.php last;
+      rewrite ^(.*)$ /index.php$1 last;
     }
 
-    # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
-    location @php {
+    #
+    # All the index.php are pass to PHP
+    # For instance:
+    # /index.php
+    # /cine-en-linea/index.php
+    #
+    location ~* \.php {
       fastcgi_pass unix:{{ fpm_socket }};
       fastcgi_split_path_info ^(.+\.php)(/.*)$;
       include fastcgi_params;
