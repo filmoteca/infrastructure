@@ -29,8 +29,9 @@ Lo pasos para tener un ambiente de desarrollo funcional son los siguientes
 * Ahora,
   * Si no has clonado el projecto `filmoteca` anteriormente, ejecutar `git clone git@github.com:filmoteca/filmoteca.git project`
   * Si ya clonaste el proyecto filmoteca, copia toda la carpeta `filmoteca` a este projecto y renamobrala a `project`
-* Ejecutar `vagrant up --provision` para "levantar" (crear) la máquina virtual. Te pedira la contraseña de administrador
-en algún momento.
+    de tal manera que quede `infrastructure/project`.
+* Ejecutar `vagrant up --provision` para "levantar" (crear) la máquina virtual. Te pedira la tu contraseña de administrador
+de la computadora donde se corrio el comando.
 * Ahora la página es accessible desde `filmoteca.dev`
 
 Con esto ya puedes modificar el proyecto dentro de la carpeta `project` como normalmente se haría.
@@ -53,10 +54,10 @@ ansible-playbook webservers.yml mysql.yml -i inventaries/production/hosts.yml
 
 #### Staging
 ```
-ansible-playbook webservers.yml mysql.yml -i inventaries/production/hosts.yml
+ansible-playbook webservers.yml mysql.yml -i inventaries/stating/hosts.yml
 ```
 
 #### Local
 ```
-ansible-playbook webservers.yml mysql.yml -i inventaries/production/hosts.yml
+ansible-playbook webservers.yml mysql.yml -i inventaries/local/hosts.yml
 ```
