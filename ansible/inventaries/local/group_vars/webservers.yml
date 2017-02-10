@@ -1,2 +1,0 @@
-fpm_socket: /var/run/www.sock
-fpm_pool_dir: /etc/php5/fpm/pool.d
