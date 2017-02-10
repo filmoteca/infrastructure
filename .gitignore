@@ -4,3 +4,7 @@
 /ansible/inventaries/staging
 .vagrant
 /project
+.zip
+.tar
+.gz
+.7z

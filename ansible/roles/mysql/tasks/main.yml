@@ -15,7 +15,7 @@
 
 - name: Create user
   mysql_user:
-    name: "{{ mysql_user }}"
-    password: "{{ mysql_password }}"
+    name: "{{ mysql_new_user }}"
+    password: "{{ mysql_new_user_password }}"
     priv: '{{ mysql_db_name }}.*:ALL'
     state: present
