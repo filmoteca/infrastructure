@@ -3,9 +3,7 @@
   become: true
 
   roles:
-    - common
-    - nginx
-    - php-fpm
-    - ssl
-    - mysql
     - vagrant
+
+- include: webservers.yml
+- include: mysql.yml
