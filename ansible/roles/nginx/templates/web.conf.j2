@@ -13,7 +13,7 @@ server {
     ssl_certificate_key /etc/nginx/ssl/{{ domain }}.key;
 
     root {{project_path}}/htdocs;
-    index index.php index.html index.htm;
+    index index.html index.htm;
 
     access_log /var/log/nginx/access.log;
     error_log /var/log/nginx/error.log {{ log_level }};
@@ -54,24 +54,21 @@ server {
     # the path is always rewritten.
     #
     location / {
-        try_files $uri @rewrite;
-    }
-
-    location @rewrite {
-      rewrite ^(.*)$ /index.php$1 last;
+        try_files $uri @rewrite_app;
     }
 
     #
-    # All the index.php are pass to PHP
-    # For instance:
-    # /index.php
-    # /cine-en-linea/index.php
+    # All the .php are pass to PHP-FPM
     #
     location ~* \.php {
-      fastcgi_pass unix:{{ fpm_socket }};
-      fastcgi_split_path_info ^(.+\.php)(/.*)$;
-      include fastcgi_params;
-      fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;
-      fastcgi_param HTTP_PROXY ""; # httpoxy vulnerability
+        fastcgi_pass unix:{{ fpm_socket }};
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;
+        fastcgi_param HTTP_PROXY ""; # httpoxy vulnerability
+    }
+
+    location @rewrite_app {
+      rewrite ^(.*)$ /index.php$1 last;
     }
 }
