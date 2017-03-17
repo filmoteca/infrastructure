@@ -72,6 +72,14 @@
     regexp: '^listen\.group.*www-data'
     line: 'listen.group = vagrant'
 
+- name: Change php-fpm socket permissions
+  file:
+    path: /var/run/www.sock
+    owner: vagrant
+    group: vagrant
+  tags:
+    - config
+
 - name: Run composer
   command: composer install
   args:
