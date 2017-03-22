@@ -10,3 +10,4 @@
     - nginx
     - php-fpm
     - ssl
+    - reverse-proxy

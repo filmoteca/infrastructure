@@ -1,0 +1,30 @@
+- name: Create reverse proxy
+  template:
+    src: reverse-proxy.conf.nginx.j2
+    dest: /etc/nginx/sites-available/reverse-proxy.conf
+    owner: www-data
+    group: www-data
+  notify: restart nginx
+  tags:
+    - reverse-proxy
+    - config
+
+- name: Enabled reverse proxy
+  file:
+    state: link
+    src: /etc/nginx/sites-available/reverse-proxy.conf
+    dest: /etc/nginx/sites-enabled/reverse-proxy.conf
+  notify: restart nginx
+  tags:
+    - reverse-proxy
+    - config
+
+
+- name: Configure http cache
+  copy:
+    src: http-cache.conf.nginx
+    dest: /etc/nginx/conf.d/http-cache.conf
+  notify: restart nginx
+  tags:
+    - reverse-proxy
+    - config

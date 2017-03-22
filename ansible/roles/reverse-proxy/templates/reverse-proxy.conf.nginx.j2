@@ -1,0 +1,48 @@
+{% if debug %}
+    {% set log_level = "debug" %}
+{% else %}
+    {% set log_level = "error" %}
+{% endif %}
+
+server {
+    listen 80;
+    listen 443 ssl;
+    server_name {{ domain }};
+
+    ssl_certificate /etc/nginx/ssl/{{ domain }}.crt;
+    ssl_certificate_key /etc/nginx/ssl/{{ domain }}.key;
+
+    root {{project_path}}/htdocs;
+    index index.html index.htm;
+
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log {{ log_level }};
+
+    location / {
+        proxy_cache http_cache;
+        set $no_cache 0;
+
+        # The administration zone does not use cache
+        if ($request_uri ~ admin) {
+            set $no_cache 1;
+        }
+
+        # The assets and files does not use cache
+        if ($request_uri ~ "\..{3}") {
+            set $no_cache 1;
+        }
+
+        add_header              X-Proxy-Cache           $upstream_cache_status;
+
+        proxy_set_header        Host                    $host;
+        proxy_set_header        X-Real-IP               $remote_addr;
+        proxy_set_header        X-Forwarded-For         $proxy_add_x_forwarded_for;
+
+        # Cache configuration
+        proxy_cache_valid       200 302  12h;
+        proxy_ignore_headers    Expires Cache-Control Set-Cookie;
+        proxy_cache_bypass      $no_cache; # If is different of empty or zero the response is taken of the origin server.
+        proxy_no_cache          $no_cache; # If is different of empty or zero the response is not saved
+        proxy_pass              http://localhost:8080;
+    }
+}
