@@ -55,3 +55,21 @@
     dest: "{{ fpm_pool_dir }}/www.conf"
   notify: restart php5-fpm
 
+- name: Change upload max file size
+  lineinfile:
+    name: /etc/php5/fpm/php.ini
+    regexp: 'upload_max_filesize'
+    line: 'upload_max_filesize = 40M'
+
+- name: Change max post size
+  lineinfile:
+    name: /etc/php5/fpm/php.ini
+    regexp: 'post_max_size'
+    line: 'post_max_size = 40M'
+  notify:
+    - restart php5-fpm
+    - restart nginx
+  tags:
+    - config
+    - php-fpm
+
