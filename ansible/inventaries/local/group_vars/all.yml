@@ -1,10 +1,11 @@
 debug: true
 env: local
 domain: filmoteca.dev
-project_path: /var/www/current
+project_path: /vagrant/current
 mysql_db_name: filmoteca
 mysql_new_user: homestead
 mysql_new_user_password: homestead
+environment_name: local
 
 # Behavioral inventory parameters of Ansible
 ansible_user: vagrant
