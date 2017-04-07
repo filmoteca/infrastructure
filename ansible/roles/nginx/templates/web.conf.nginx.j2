@@ -26,6 +26,8 @@ server {
     fastcgi_buffers 16  16k;
     fastcgi_buffer_size 32k;
 
+    client_max_body_size {{ max_body_size }}M;
+
     {% if not debug %}
     # We need to compile nginx with this module.
     #pagespeed on;

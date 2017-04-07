@@ -59,13 +59,13 @@
   lineinfile:
     name: /etc/php5/fpm/php.ini
     regexp: 'upload_max_filesize'
-    line: 'upload_max_filesize = 40M'
+    line: 'upload_max_filesize = {{ max_body_size - 2}}M'
 
 - name: Change max post size
   lineinfile:
     name: /etc/php5/fpm/php.ini
     regexp: 'post_max_size'
-    line: 'post_max_size = 40M'
+    line: 'post_max_size = {{ max_body_size }}M'
   notify:
     - restart php5-fpm
     - restart nginx
@@ -73,3 +73,10 @@
     - config
     - php-fpm
 
+- name: Set permissions to /var/www
+  file:
+    state: directory
+    path: /var/www
+    owner: www-data
+    group: www-data
+    mode: 0754

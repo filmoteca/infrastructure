@@ -6,6 +6,7 @@ mysql_db_name: filmoteca
 mysql_new_user: homestead
 mysql_new_user_password: homestead
 environment_name: local
+max_body_size: 10                   # Megabytes
 
 # Behavioral inventory parameters of Ansible
 ansible_user: vagrant
