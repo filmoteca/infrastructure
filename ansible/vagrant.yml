@@ -9,6 +9,5 @@
     - nginx
     - php-fpm
     - ssl
-    - reverse-proxy
     - mysql
     - vagrant
