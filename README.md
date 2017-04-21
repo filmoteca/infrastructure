@@ -25,7 +25,7 @@ Lo pasos para tener un ambiente de desarrollo funcional son los siguientes
 
 * Clonar este *repository*
 * Entrar al directorio donde se acaba de clonar el proyecto.
-* Ejecutar `vagrant plugin install vagrant-hostsupdater`
+* Ejecutar `vagrant plugin install vagrant-hostsupdater` (ver nota)
 * Ahora,
   * Si no has clonado el projecto `filmoteca` anteriormente, ejecutar `git clone git@github.com:filmoteca/filmoteca.git project`
   * Si ya clonaste el proyecto filmoteca, copia toda la carpeta `filmoteca` a este projecto y renamobrala a `project`
@@ -35,6 +35,13 @@ de la computadora donde se corrio el comando.
 * Ahora la página es accessible desde `filmoteca.dev`
 
 Con esto ya puedes modificar el proyecto dentro de la carpeta `project` como normalmente se haría.
+
+**Nota**: Si la instalación del plugin muestra el siguiente error instala vagrant desde la [página oficial](https://www.vagrantup.com/downloads.html) 
+
+```
+Installing the 'vagrant-hostsupdater' plugin. This can take a few minutes...
+/usr/lib/ruby/2.3.0/rubygems/specification.rb:946:in `all=': undefined method `group_by' for nil:NilClass (NoMethodError)
+```
 
 
 ## Usario por default de la zona administrativa
