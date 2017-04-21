@@ -1,7 +1,7 @@
 debug: true
 env: local
 domain: filmoteca.dev
-project_path: /vagrant/current
+project_path: /vagrant
 mysql_db_name: filmoteca
 mysql_new_user: homestead
 mysql_new_user_password: homestead

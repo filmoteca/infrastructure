@@ -80,3 +80,8 @@
     owner: www-data
     group: www-data
     mode: 0754
+
+- name: Force restart of FPM
+  service:
+    name: php5-fpm
+    state: restarted
