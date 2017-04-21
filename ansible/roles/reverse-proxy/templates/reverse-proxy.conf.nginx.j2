@@ -32,6 +32,11 @@ server {
             set $no_cache 1;
         }
 
+        # Reverse proxy disabled by ansible
+        {% if debug %}
+            set $no_cache 1;
+        {% endif %}
+
         add_header              X-Proxy-Cache           $upstream_cache_status;
 
         proxy_set_header        Host                    $host;

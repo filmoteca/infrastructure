@@ -10,4 +10,5 @@
     - php-fpm
     - ssl
     - mysql
+    - reverse-proxy
     - vagrant
