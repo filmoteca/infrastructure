@@ -74,8 +74,4 @@ server {
       rewrite ^(.*)$ /index.php$1 last;
     }
     
-    location ~* ^apple-.*\.png$ {
-       try_files /assets/imgs/$uri;
-    }
-
 }
